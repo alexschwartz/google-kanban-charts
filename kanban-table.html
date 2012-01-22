@@ -13,7 +13,7 @@
            'https://docs.google.com/spreadsheet/ccc?key=0Aj9OVXRJH0lidEdUU0hoSW9uUkpwQVkydS1UTE9KNEE');
 
         // Apply query language.
-        query.setQuery('SELECT D,F,G, B,C,H,L,K,Q WHERE E = "Done"');
+        query.setQuery('SELECT D,F,G, B,C,H,L,K,M,R WHERE E = "Done"');
 
         // Send the query with a callback function.
         query.send(handleQueryResponse);
@@ -42,7 +42,7 @@
 
           var formatterTimeDone = new google.visualization.DateFormat({pattern: "EEE, MMM d, yyyy H:m z"});
           formatterTimeDone.format(data, 6);
-
+          
           
           
           table.draw(data, {allowHtml: true, showRowNumber: true});
