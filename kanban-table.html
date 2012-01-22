@@ -29,10 +29,14 @@
 
           var table = new google.visualization.Table(document.getElementById('table_div'));
           
-          //var formatter = new google.visualization.ColorFormat();
-          //formatter.addRange('App Rollout', 'App Rollout', 'white', 'orange');
-          //formatter.addRange(20000, null, 'red', '#33ff33');
-          // formatter.format(data, 1); // Apply formatter to second column
+          var formatter = new google.visualization.ColorFormat();
+          formatter.addRange('App Rollout',  'DB Change',    'black', 'yellow');
+          formatter.addRange('DB Change',    'Data Rollout', 'white', '#70B8FF');
+          formatter.addRange('Data Rollout', 'Incident',     'white', '#1F5C99');
+          formatter.addRange('Incident',     'Sys Change',   'white', 'red');
+          formatter.addRange('Sys Change',   null,           'white', 'green');
+
+          formatter.format(data, 1); // Apply formatter to second column
           
           var formatterLRFC = new google.visualization.PatternFormat('<a href="http://myjira.com/{0}">{0}</a>');
           formatterLRFC.format(data, [0]); // Apply formatter and set the formatted value of the first column.
