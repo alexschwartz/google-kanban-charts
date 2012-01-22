@@ -40,8 +40,8 @@
           var formatterAlso = new google.visualization.PatternFormat('<a href="http://myjira.com/{0}">{0}</a>');
           formatterAlso.format(data, [4]); // Apply formatter and set the formatted value of the first column.
 
-          //var formatterTimeDone = new google.visualization.DateFormat({pattern: "EEE, MMM d, yyyy H:mm z"});
-          //formatterTimeDone.format(data, 6);
+          var formatterTimeDone = new google.visualization.DateFormat({pattern: "EEE, MMM d, yyyy H:m z"});
+          formatterTimeDone.format(data, 6);
 
           
           
