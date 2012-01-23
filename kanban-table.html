@@ -13,7 +13,7 @@
            'https://docs.google.com/spreadsheet/ccc?key=0Aj9OVXRJH0lidEdUU0hoSW9uUkpwQVkydS1UTE9KNEE');
 
         // Apply query language.
-        query.setQuery('SELECT D,F,G, B,C,H,L,K,M,R WHERE E = "Done"');
+        query.setQuery('SELECT A,D,F,G, B,H,L,R WHERE E = "Done"');
 
         // Send the query with a callback function.
         query.send(handleQueryResponse);
@@ -36,26 +36,27 @@
           formatter.addRange('Incident',     'Sys Change',   'white', 'red');
           formatter.addRange('Sys Change',   null,           'white', 'green');
 
-          formatter.format(data, 1); // Apply formatter to second column
+          formatter.format(data, 2); // Apply formatter to second column
           
-          var formatterLRFC = new google.visualization.PatternFormat('<a href="http://myjira.com/{0}">{0}</a>');
-          formatterLRFC.format(data, [0]); // Apply formatter and set the formatted value of the first column.
+          var formatterJiraTicket = new google.visualization.PatternFormat('<a href="http://myjira.com/{0}">{0}</a>');
+          formatterJiraTicket.format(data, [1]); 
 
-          var formatterAlso = new google.visualization.PatternFormat('<a href="http://myjira.com/{0}">{0}</a>');
-          formatterAlso.format(data, [4]); // Apply formatter and set the formatted value of the first column.
-
-          var formatterTimeDone = new google.visualization.DateFormat({pattern: "EEE, MMM d, yyyy H:m z"});
+          var formatterTimeDone = new google.visualization.DateFormat({pattern: "d-MMM-yyyy H:mm"});
           formatterTimeDone.format(data, 6);
           
           
           
-          table.draw(data, {allowHtml: true, showRowNumber: true});
+          table.draw(data, {allowHtml: true, showRowNumber: false});
       }
       
     </script>
   </head>
 
   <body>
+    <h1>Places Release Kanban Board: What we delivered in 2012?</h1>
+    <p>All time values refer to Berlin time (MEZ = UTC+1). <strong>RCT</strong> stands for <i>Release Cycle Time</i>, that is, 
+    the time between the start time of a release (e.g. the team created the rpm and sends the announcement) and its delivery to production.
+    </p>
     <div id='table_div'></div>
   </body>
 </html>
