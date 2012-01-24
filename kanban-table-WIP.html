@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        // To see the data that this visualization uses, browse to
+        // http://spreadsheets.google.com/ccc?key=pCQbetd-CptGXxxQIG7VFIQ  
+        var query = new google.visualization.Query(
+           'https://docs.google.com/spreadsheet/ccc?key=0Aj9OVXRJH0lidEdUU0hoSW9uUkpwQVkydS1UTE9KNEE');
+
+        // Apply query language.
+        query.setQuery('SELECT A,D,F,G, B,E,M,N,S WHERE not (E starts with "Done")  and B != ""');
+
+        // Send the query with a callback function.
+        query.send(handleQueryResponse);
+      }
+
+      function handleQueryResponse(response) {
+          if (response.isError()) {
+            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+            return;
+          }
+
+          var data = response.getDataTable();
+
+          var table = new google.visualization.Table(document.getElementById('table_div'));
+          
+          var formatter = new google.visualization.ColorFormat();
+          formatter.addRange('App Rollout',  'DB Change',    'black', 'yellow');
+          formatter.addRange('DB Change',    'Data Rollout', 'white', '#70B8FF');
+          formatter.addRange('Data Rollout', 'Incident',     'white', '#1F5C99');
+          formatter.addRange('Incident',     'Sys Change',   'white', 'red');
+          formatter.addRange('Sys Change',   null,           'white', 'green');
+
+          formatter.format(data, 2); // Apply formatter to second column
+          
+          var formatterJiraTicket = new google.visualization.PatternFormat('<a href="http://myjira.com/{0}">{0}</a>');
+          formatterJiraTicket.format(data, [1]); 
+
+          var formatterTimeDone = new google.visualization.DateFormat({pattern: "d-MMM-yyyy H:mm"});
+          formatterTimeDone.format(data, 6);
+          
+          
+          
+          table.draw(data, {allowHtml: true, showRowNumber: false});
+      }
+      
+    </script>
+  </head>
+
+  <body>
+    <h1>Places Release Kanban Board: WIP (Work-in-Progress)?</h1>
+    <p>All time values refer to Berlin time (MEZ = UTC+1). <strong>RCT</strong> stands for <i>Release Cycle Time</i>, that is, 
+    the time between the start time of a release (e.g. the team created the rpm and sends the announcement) and its delivery to production.
+    </p>
+    <div id='table_div'></div>
+  </body>
+</html>
